@@ -20,7 +20,7 @@ public class Product {
     private double price;
 
     // add a product_category column to the product table.
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "product_category", nullable = false)
     private Category category;
 

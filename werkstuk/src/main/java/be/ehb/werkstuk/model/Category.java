@@ -3,6 +3,8 @@ package be.ehb.werkstuk.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -14,8 +16,8 @@ public class Category {
     private String name;
 
     // add a product_category column to the product table.
-    @OneToOne(mappedBy = "category")
-    private Product product;
+    @OneToMany(mappedBy = "category")
+    private List<Product> products = new ArrayList<>();
 
     // constructor
     public Category() {
@@ -38,11 +40,11 @@ public class Category {
         this.name = name;
     }
 
-    public Product getProduct() {
-        return product;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }
