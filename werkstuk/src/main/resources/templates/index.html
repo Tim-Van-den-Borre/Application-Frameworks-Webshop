@@ -5,11 +5,28 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <title>Webshop</title>
     </head>
-    <body style="margin: auto; width: 80%;">
+
+    <!-- Navigation -->
+    <nav th:replace="~{menu :: navigation}"></nav>
+    <!-- End Navigation -->
+
+    <body style="margin: auto;">
+        <hr>
+        <form th:action="@{/}" method="post" style="margin: auto; width: 30%;">
+            <div class="form-group" style="margin: auto;">
+                <select class="custom-select" th:name="category">
+                    <option th:text="None" th:value="0" th:type="submit"></option>
+                    <option th:each="category : ${allCategories}" th:text="${category.name}" th:value="${category.id}" th:type="submit"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-warning btn-sm">Filter</button>
+            </div>
+        </form>
+        <hr>
         <div class="container">
-            <h4>Products</h4>
             <div class="row">
-                <div class="col-lg-4 py-2" style="float: left;" th:each="product : ${allProducts}">
+                <div class="col-lg-4 py-2" style="float: left;" th:each="product : ${filteredProducts}">
                     <div class="card">
                         <img class="card-img-top" >
                         <div class="card-body h-100">
@@ -17,19 +34,6 @@
                             <p class="card-text" th:text="${product.description}"></p>
                             <p class="card-text" th:text="${product.price}"></p>
                             <p class="card-text" th:text="${product.category.name}"></p>
-                        </div>
-                        <div class="center card-footer">
-                            <a class="btn btn-outline-primary" href="...">Add to card</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 py-2" style="float: left;" th:each="category : ${allCategories}">
-                    <div class="card">
-                        <img class="card-img-top" >
-                        <div class="card-body h-100">
-                            <h5 class="card-title" th:text="${category.name}"></h5>
                         </div>
                         <div class="center card-footer">
                             <a class="btn btn-outline-primary" href="...">Add to card</a>

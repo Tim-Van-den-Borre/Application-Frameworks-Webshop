@@ -12,5 +12,5 @@ public interface ProductDAO extends CrudRepository<Product, Integer> {
     @Query("SELECT p FROM Product p")
     Iterable<Product> getAll();
 
-    Iterable<Product> getAllByCategory(Category category);
+    Iterable<Product> getAllByCategory_Id(int id);
 }
