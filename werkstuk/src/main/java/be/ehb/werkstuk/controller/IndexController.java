@@ -53,4 +53,5 @@ public class IndexController {
         map.addAttribute("filteredProducts", products);
         return "index";
     }
+    
 }
