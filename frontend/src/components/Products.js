@@ -53,10 +53,10 @@ class Products extends Component {
         return (
             <div className="mt-4">
                 <h2>Products</h2>
-                <div className="row">
+                <div className="row" id="filter">
                     <Filter onSubmit={this.filteredProducts} />
                 </div>
-                <div className="row">
+                <div className="row" id="products">
                     {this.state.Products.map((product, index) => {
                         return (
                             <div className="col-md-4" key={product.id}>
@@ -66,7 +66,7 @@ class Products extends Component {
                                         <h5 className="card-title">{product.name}</h5>
                                         <p className="card-text">{product.description}</p>
                                         <p className="card-text">{product.price}</p>
-                                        <a href="#" className="btn btn-secondary">Add to cart</a>
+                                        <a href="#" className="btn btn-primary btn-sm">Add to cart</a>
                                     </div>
                                 </div>
                             </div>

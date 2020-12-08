@@ -1,17 +1,18 @@
-.container {
-  width: 100%;
+#products {
+  margin: auto;
+  width: 90%;
 }
 
-.row {
-  padding: 1rem;
+.col-md-4 {
+
 }
 
 .card {
-  margin: 10px;
-  border-radius: 15px;
-  height: 20vh;
+  padding: 0;
+  border-radius: 5px;
+  margin: 5px;
 }
 
-.card-body p {
-  text-align: left;
+.card-text {
+  height: 10vh;
 }
