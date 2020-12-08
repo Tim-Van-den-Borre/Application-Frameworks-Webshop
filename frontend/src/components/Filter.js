@@ -29,22 +29,19 @@ class Filter extends Component{
     };
 
     submitHandler = (value) => {
-        console.log(value);
         this.props.onSubmit(value)
     }
 
     handleInputChange(event) {
         const value = event.target.value;
         const name = event.target.name;
-
-        console.log("Name: " + name + " Value: " + value);
         this.submitHandler(value);
     }
 
     render() {
         return(
             <div className="form-group">
-                <label htmlFor="filter">Filter by category</label>
+                <label htmlFor="filter">Filter products by category</label>
                 <select className="form-control" id="filter" onChange={this.handleInputChange} name={"category"}>
                     <option>None</option>
                     {

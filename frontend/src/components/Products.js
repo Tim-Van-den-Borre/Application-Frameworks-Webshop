@@ -51,24 +51,21 @@ class Products extends Component {
 
     render = () => {
         return (
-            <div className="mt-4">
-                <h2>Products</h2>
+            <div>
                 <div className="row" id="filter">
                     <Filter onSubmit={this.filteredProducts} />
                 </div>
                 <div className="row" id="products">
                     {this.state.Products.map((product, index) => {
                         return (
-                            <div className="col-md-4" key={product.id}>
-                                <div className="card">
-                                    <img src="#" className="card-img-top" alt="image" />
+                            <div className="card" key={product.id}>
+                                <img className="card-img-top" />
                                     <div className="card-body">
                                         <h5 className="card-title">{product.name}</h5>
-                                        <p className="card-text">{product.description}</p>
-                                        <p className="card-text">{product.price}</p>
-                                        <a href="#" className="btn btn-primary btn-sm">Add to cart</a>
+                                        <p className="card-text" id="description">{product.description}</p>
+                                        <p className="card-text" id="price">€{product.price}</p>
+                                        <a href="#" className="btn btn-info btn-sm">Add to cart</a>
                                     </div>
-                                </div>
                             </div>
                         )
                     })}

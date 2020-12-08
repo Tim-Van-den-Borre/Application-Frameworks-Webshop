@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProductDAO extends CrudRepository<Product, Integer> {
     Iterable<Product> findAllByCategory_Name(String category);
+
 }
