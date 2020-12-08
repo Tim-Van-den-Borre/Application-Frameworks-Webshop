@@ -1,6 +1,5 @@
 import './App.css';
 import Products from "./components/Products";
-import Filter from "./components/Filter";
 import React from "react";
 function App() {
   return (

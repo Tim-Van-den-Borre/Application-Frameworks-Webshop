@@ -2,14 +2,14 @@
   width: 100%;
 }
 
-.row .col-md-4 {
+.row {
   padding: 1rem;
 }
 
 .card {
   margin: 10px;
   border-radius: 15px;
-  height: 30vh;
+  height: 20vh;
 }
 
 .card-body p {
