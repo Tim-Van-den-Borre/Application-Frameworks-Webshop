@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import Filter from './Filter'
+import Navbar from "./Navbar";
 
 class Products extends Component {
-    state = {
-        Products: []
+    constructor(props) {
+        super(props);
+        this.state = {
+            Products: [],
+            Cart: []
+        };
     }
 
     componentDidMount = () => {
@@ -59,12 +64,12 @@ class Products extends Component {
                     {this.state.Products.map((product, index) => {
                         return (
                             <div className="card" key={product.id}>
-                                <img className="card-img-top" />
+                                <img className="card-img-top" src={product.image} alt="" />
                                     <div className="card-body">
                                         <h5 className="card-title">{product.name}</h5>
                                         <p className="card-text" id="description">{product.description}</p>
                                         <p className="card-text" id="price">€{product.price}</p>
-                                        <a href="#" className="btn btn-info btn-sm">Add to cart</a>
+                                        <button onClick={() => this.setState({ Cart: this.state.Cart.concat(product.name)})} type="button" className="btn btn-info btn-sm">Add to cart</button>
                                     </div>
                             </div>
                         )

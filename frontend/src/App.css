@@ -3,12 +3,20 @@
   margin: auto;
 }
 
+.card-img-top{
+  width: 150px;
+  height: 150px;
+  margin: auto;
+  margin-top: 5px;
+}
+
 #description {
-  height: 30px;
+  height: 20px;
 }
 
 #price {
   text-align: right;
+  height: 10px;
 }
 
 .row {
@@ -25,5 +33,4 @@
 
 .card:hover {
   border: 1px solid deepskyblue;
-  background: aliceblue;
 }

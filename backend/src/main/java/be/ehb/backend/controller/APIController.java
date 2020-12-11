@@ -10,6 +10,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/api")
 public class APIController {
@@ -21,6 +23,13 @@ public class APIController {
     public APIController(ProductDAO productDAO, CategoryDAO categoryDAO) {
         this.productDAO = productDAO;
         this.categoryDAO = categoryDAO;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Product getProductById(@PathVariable int id){
+        return productDAO.findById(id);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")

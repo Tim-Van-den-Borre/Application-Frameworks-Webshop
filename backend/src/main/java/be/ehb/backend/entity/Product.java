@@ -22,6 +22,9 @@ public class Product {
     @NotBlank(message = "Price cannot be empty")
     private double price;
 
+    @NotBlank(message = "Image url cannot be empty")
+    private String image;
+
     // add a product_category column to the product table.
     @ManyToOne
     @JoinColumn(name = "product_category", nullable = false)
@@ -71,5 +74,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
