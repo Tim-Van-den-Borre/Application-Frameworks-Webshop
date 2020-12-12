@@ -11,12 +11,12 @@
 }
 
 #description {
-  height: 20px;
+  height: 15px;
 }
 
-#price {
+#price, #amount {
   text-align: right;
-  height: 10px;
+  height: 5px;
 }
 
 .row {
