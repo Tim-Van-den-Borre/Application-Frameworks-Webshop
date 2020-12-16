@@ -17,6 +17,7 @@ export default class Auth {
     this.auth0.authorize();
   };
 
+  // Handle the authentication.
   handleAuthentication = () => {
     // Parse the hash from the url.
     this.auth0.parseHash((err, authResult) => {
@@ -36,6 +37,7 @@ export default class Auth {
     });
   };
 
+  // Set items in storage to check later if the user is logged in or not (local login).
   setSession = (authResult) => {
     // Set the time that the access token will be available.
     // Will be saved to the session.
@@ -53,5 +55,19 @@ export default class Auth {
   isAuthenticated = () => {
     const expiresAt = JSON.parse(localStorage.getItem("expires_at"));
     return new Date().getTime() < expiresAt;
+  };
+
+  // Log the user out.
+  logout = () => {
+    // Remove the storage items (local logout).
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("expires_at");
+
+    // Sign out at auth0 server and redirect to the homepage.
+    this.auth0.logout({
+      clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
+      returnTo: "http://localhost:3000",
+    });
   };
 }

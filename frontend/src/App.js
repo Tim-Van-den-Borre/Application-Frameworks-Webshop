@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Navbar from "./components/Navbar";
+import Cart from "./components/Cart";
 import Auth from "./Auth/Auth";
 import Callback from "./Auth/Callback";
 
@@ -16,7 +17,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <Navbar />
+        <Navbar auth={this.auth} />
         <div className="body">
           <Route
             path="/"
@@ -28,6 +29,8 @@ class App extends Component {
             render={(props) => <Callback auth={this.auth} {...props} />}
           />
           <Route path="/profile" component={Profile} />
+
+          <Route path="/cart" component={Cart} />
         </div>
       </>
     );
