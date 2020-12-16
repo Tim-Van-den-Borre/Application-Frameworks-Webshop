@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-
 @Entity
 public class Product {
     @Id
@@ -24,6 +23,8 @@ public class Product {
 
     @NotBlank(message = "Image url cannot be empty")
     private String image;
+
+    private int amount;
 
     // add a product_category column to the product table.
     @ManyToOne
@@ -82,5 +83,13 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

@@ -1,16 +1,19 @@
 package be.ehb.backend.controller;
 
 import be.ehb.backend.dao.CategoryDAO;
+import be.ehb.backend.dao.OrdersDAO;
 import be.ehb.backend.dao.ProductDAO;
+import be.ehb.backend.dao.ProductOrderDAO;
 import be.ehb.backend.entity.Category;
+import be.ehb.backend.entity.Orders;
 import be.ehb.backend.entity.Product;
+import be.ehb.backend.entity.ProductOrder;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/api")
@@ -18,11 +21,36 @@ public class APIController {
 
     private ProductDAO productDAO;
     private CategoryDAO categoryDAO;
+    private OrdersDAO ordersDAO;
+    private ProductOrderDAO productOrderDAO;
 
     @Autowired
-    public APIController(ProductDAO productDAO, CategoryDAO categoryDAO) {
+    public APIController(ProductDAO productDAO, CategoryDAO categoryDAO, OrdersDAO ordersDAO, ProductOrderDAO productOrderDAO) {
         this.productDAO = productDAO;
         this.categoryDAO = categoryDAO;
+        this.ordersDAO = ordersDAO;
+        this.productOrderDAO = productOrderDAO;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value = "/users/order", method = RequestMethod.POST)
+    @ResponseBody
+    public HttpStatus insertOrder(@RequestParam("userID") int userID){
+        Orders order = new Orders();
+        order.setUserID(userID);
+        ordersDAO.save(order);
+        return HttpStatus.OK;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value = "/users/linkorder", method = RequestMethod.POST)
+    @ResponseBody
+    public HttpStatus linkOrder(@RequestParam("orderID") int orderID, @RequestParam("productID") int productID){
+        ProductOrder link = new ProductOrder();
+        link.setOrderID(orderID);
+        link.setProductID(productID);
+        productOrderDAO.save(link);
+        return HttpStatus.OK;
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
