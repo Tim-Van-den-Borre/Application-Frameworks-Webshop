@@ -41,6 +41,9 @@ class Navbar extends Component {
           ) : (
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
+                <Link to="/cart">Cart</Link>
+              </li>
+              <li className="nav-item">
                 <Link onClick={login}>Log in</Link>
               </li>
             </ul>

@@ -13,7 +13,6 @@ class App extends Component {
     super(props);
     this.auth = new Auth(this.props.history);
   }
-
   render() {
     return (
       <>
@@ -38,16 +37,7 @@ class App extends Component {
               )
             }
           />
-          <Route
-            path="/cart"
-            render={(props) =>
-              this.auth.isAuthenticated() ? (
-                <Cart auth={this.auth} {...props} />
-              ) : (
-                <Redirect to="/" />
-              )
-            }
-          />
+          <Route path="/cart" component={Cart} />
         </div>
       </>
     );

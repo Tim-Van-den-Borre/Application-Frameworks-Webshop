@@ -24,3 +24,41 @@ nav li a:hover {
   margin: 20px;
   width: 60%;
 }
+
+#filter {
+  width: 30rem;
+  margin: auto;
+}
+
+.card-img-top {
+  width: 150px;
+  height: 150px;
+  margin: auto;
+  margin-top: 5px;
+}
+
+#description {
+  height: 15px;
+}
+
+#price,
+#amount {
+  text-align: right;
+  height: 5px;
+}
+
+.row {
+  width: 100%;
+  margin: auto;
+  justify-content: center;
+}
+
+.card {
+  width: 30rem;
+  border-radius: 10px;
+  margin: 0.5rem;
+}
+
+.card:hover {
+  border: 1px solid deepskyblue;
+}

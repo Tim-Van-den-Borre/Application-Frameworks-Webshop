@@ -2,11 +2,7 @@ import React, { Component } from "react";
 
 class Cart extends Component {
   render() {
-    return (
-      <div>
-        <p>Cart</p>
-      </div>
-    );
+    return <div></div>;
   }
 }
 
