@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Navbar from "./components/Navbar";
@@ -28,9 +28,26 @@ class App extends Component {
             path="/callback"
             render={(props) => <Callback auth={this.auth} {...props} />}
           />
-          <Route path="/profile" component={Profile} />
-
-          <Route path="/cart" component={Cart} />
+          <Route
+            path="/profile"
+            render={(props) =>
+              this.auth.isAuthenticated() ? (
+                <Profile auth={this.auth} {...props} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
+          <Route
+            path="/cart"
+            render={(props) =>
+              this.auth.isAuthenticated() ? (
+                <Cart auth={this.auth} {...props} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
         </div>
       </>
     );

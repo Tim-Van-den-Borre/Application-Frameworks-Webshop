@@ -3,6 +3,7 @@ import auth0 from "auth0-js";
 export default class Auth {
   constructor(history) {
     this.history = history;
+    this.userProfile = null;
     this.auth0 = new auth0.WebAuth({
       domain: process.env.REACT_APP_AUTH0_DOMAIN,
       clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
@@ -63,11 +64,34 @@ export default class Auth {
     localStorage.removeItem("access_token");
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
+    this.userProfile = null;
 
     // Sign out at auth0 server and redirect to the homepage.
     this.auth0.logout({
       clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
       returnTo: "http://localhost:3000",
+    });
+  };
+
+  // Get the access token from the local storage and throw an error if the token is not found.
+  getAccessToken = () => {
+    const accessToken = localStorage.getItem("access_token");
+    if (!accessToken) {
+      throw new Error("No access token found.");
+    }
+    return accessToken;
+  };
+
+  // Get the user profile.
+  getProfile = (callback) => {
+    // If the user profile exists then it will be returned.
+    if (this.userProfile) return callback(this.userProfile);
+
+    // If there is no profile the 'userInfo' endpoint at auth0 will be called and pass the access token.
+    this.auth0.client.userInfo(this.getAccessToken(), (error, profile) => {
+      // If auth0 returns a profile it will be displayed.
+      if (profile) this.userProfile = profile;
+      callback(profile, error);
     });
   };
 }
