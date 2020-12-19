@@ -28,10 +28,11 @@ nav li a:hover {
 #filter {
   width: 30rem;
   margin: auto;
+  margin-top: 15px;
 }
 
 .card-img-top {
-  width: 150px;
+  width: 130px;
   height: 150px;
   margin: auto;
   margin-top: 5px;
@@ -55,7 +56,7 @@ nav li a:hover {
 
 .card {
   width: 30rem;
-  border-radius: 10px;
+  border-radius: 5px;
   margin: 0.5rem;
 }
 

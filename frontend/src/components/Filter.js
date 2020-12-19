@@ -1,66 +1,47 @@
 import React, { Component } from "react";
 
 class Filter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Categories: [],
-    };
-    this.handleInputChange = this.handleInputChange.bind(this);
-  }
-
-  componentDidMount() {
-    fetch("http://localhost:8080/api/categories", {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        console.log("Error: ", response);
-      })
-      .then((json) => {
-        console.log("Categories: ", json);
-        this.setState({ Categories: json });
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
-  }
-
-  submitHandler = (value) => {
-    this.props.onSubmit(value);
+  state = {
+    Categories: [],
   };
 
-  handleInputChange(event) {
-    const value = event.target.value;
-    const name = event.target.name;
-    this.submitHandler(value);
-  }
+  // Get all the categories. Accepts application/json by default.
+  componentDidMount = () => {
+    fetch(`http://localhost:8080/api/categories`)
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw new Error(`Could not fetch categories.`);
+      })
+      .then((response) => this.setState({ Categories: response }))
+      .catch((error) => console.log(`Error: ${error}`));
+  };
+
+  // Send the chosen category to the 'Home' (products) component to get the products by category.
+  submitHandler = (event) => {
+    this.props.onSubmit(event.target.value);
+  };
 
   render() {
     return (
-      <div className="form-group">
-        <label htmlFor="filter">Filter by category</label>
-        <select
-          className="form-control"
-          id="filter"
-          onChange={this.handleInputChange}
-          name={"category"}
-        >
-          <option>None</option>
-          {this.state.Categories.map((category, index) => {
-            return (
-              <option key={category.id} value={category.name}>
-                {category.name}
-              </option>
-            );
-          })}
-        </select>
-      </div>
+      <>
+        <div className="form-group">
+          <select
+            className="form-control"
+            id="filter"
+            onChange={this.submitHandler}
+            name={"category"}
+          >
+            <option>None</option>
+            {this.state.Categories.map((category, index) => {
+              return (
+                <option key={category.id} value={category.name}>
+                  {category.name}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+      </>
     );
   }
 }

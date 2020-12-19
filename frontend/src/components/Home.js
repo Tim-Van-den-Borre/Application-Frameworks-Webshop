@@ -2,55 +2,32 @@ import React, { Component } from "react";
 import Filter from "./Filter";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Products: [],
-      Cart: [],
-    };
-  }
-
-  componentDidMount = () => {
-    fetch("http://localhost:8080/api/products", {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        console.log("error: " + response);
-      })
-      .then((json) => {
-        console.log("Products:" + json);
-        this.setState({ Products: json });
-      })
-      .catch((error) => {
-        console.log("error: " + error);
-      });
+  state = {
+    Products: [],
+    Cart: [],
   };
 
-  filteredProducts = (category) => {
-    if (category === "None") this.componentDidMount();
-    fetch(`http://localhost:8080/api/products?category=${category}`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    })
+  // Get all the products. Accepts application/json by default.
+  componentDidMount = () => {
+    fetch(`http://localhost:8080/api/products`)
       .then((response) => {
         if (response.ok) return response.json();
-        console.log("error: " + response);
+        throw new Error(`Could not fetch products.`);
       })
-      .then((json) => {
-        console.log("Products: " + json);
-        this.setState({ Products: json });
+      .then((response) => this.setState({ Products: response }))
+      .catch((error) => console.log(`Error: ${error}`));
+  };
+
+  // Get all the products filtered by category. Accepts application/json by default.
+  filteredProducts = (category) => {
+    if (category === "None") this.componentDidMount();
+    fetch(`http://localhost:8080/api/products?category=${category}`)
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw new Error(`Could not fetch categories.`);
       })
-      .catch((error) => {
-        console.log("error: " + error);
-      });
+      .then((response) => this.setState({ Products: response }))
+      .catch((error) => console.log(`Error: ${error}`));
   };
 
   render() {
