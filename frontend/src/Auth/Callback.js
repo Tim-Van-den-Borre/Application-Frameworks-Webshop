@@ -11,7 +11,11 @@ class Callback extends Component {
     }
   };
   render() {
-    return <h1>Loading...</h1>;
+    return (
+      <div class="spinner-grow" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    );
   }
 }
 

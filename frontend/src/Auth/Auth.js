@@ -2,18 +2,23 @@ import auth0 from "auth0-js";
 
 export default class Auth {
   constructor(history) {
+    // Is the user still logged in? When did he/she log in.
     this.history = history;
+    // Profile data.
     this.userProfile = null;
     this.auth0 = new auth0.WebAuth({
+      // Variables (declared in .env file) for authentication.
       domain: process.env.REACT_APP_AUTH0_DOMAIN,
       clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
       redirectUri: process.env.REACT_APP_AUTH0_CALLBACK_URL,
-      responseType: "token id_token", //Access token to make api calls.
+      //Access token to make api calls.
+      responseType: "token id_token",
+      // Profile information from auth0, the profile and email address.
       scope: "openid profile email",
     });
   }
 
-  // Redirect browser to login page from auth0.
+  // Redirect browser to login page from auth0 (login or register user)
   login = () => {
     this.auth0.authorize();
   };
@@ -26,7 +31,6 @@ export default class Auth {
       if (authResult && authResult.accessToken && authResult.idToken) {
         // Write the data to the session.
         this.setSession(authResult);
-
         // Redirect the application back to our homepage.
         this.history.push("/");
       } else if (err) {
@@ -82,7 +86,7 @@ export default class Auth {
     return accessToken;
   };
 
-  // Get the user profile.
+  // Get the user profile (data).
   getProfile = (callback) => {
     // If the user profile exists then it will be returned.
     if (this.userProfile) return callback(this.userProfile);

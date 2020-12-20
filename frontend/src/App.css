@@ -56,10 +56,14 @@ nav li a:hover {
 
 .card {
   width: 30rem;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 0.5rem;
 }
 
 .card:hover {
   border: 1px solid deepskyblue;
+}
+
+.btn {
+  width: 8rem;
 }

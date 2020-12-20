@@ -5,12 +5,14 @@ class Cart extends Component {
     Cart: [],
   };
 
+  handleCart = () => {};
+
   render() {
     return (
       <>
         <h4>Your cart</h4>
         <ul class="list-unstyled">
-          {this.state.Cart.map((product, index) => {
+          {this.state.Cart.map((product) => {
             return (
               <li class="media" key={product.id}>
                 <img

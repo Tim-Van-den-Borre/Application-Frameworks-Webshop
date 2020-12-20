@@ -7,7 +7,7 @@ class Navbar extends Component {
     return (
       <>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a className="navbar-brand" href="">
+          <a className="navbar-brand" href="./">
             Webshop
           </a>
           <button

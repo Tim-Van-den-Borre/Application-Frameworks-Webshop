@@ -32,7 +32,7 @@ class Filter extends Component {
             name={"category"}
           >
             <option>None</option>
-            {this.state.Categories.map((category, index) => {
+            {this.state.Categories.map((category) => {
               return (
                 <option key={category.id} value={category.name}>
                   {category.name}
