@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class Navbar extends Component {
-  render() {
+  render = () => {
     const { isAuthenticated, login, logout } = this.props.auth;
     return (
       <>
@@ -36,7 +36,9 @@ class Navbar extends Component {
                   <Link to="/profile">Profile</Link>
                 </li>
                 <li className="nav-item">
-                  <Link onClick={logout}>Log out</Link>
+                  <Link to="" onClick={logout}>
+                    Log out
+                  </Link>
                 </li>
               </ul>
             ) : (
@@ -45,7 +47,9 @@ class Navbar extends Component {
                   <Link to="/cart">Cart</Link>
                 </li>
                 <li className="nav-item">
-                  <Link onClick={login}>Log in</Link>
+                  <Link to="" onClick={login}>
+                    Log in
+                  </Link>
                 </li>
               </ul>
             )}
@@ -53,7 +57,7 @@ class Navbar extends Component {
         </nav>
       </>
     );
-  }
+  };
 }
 
 export default Navbar;

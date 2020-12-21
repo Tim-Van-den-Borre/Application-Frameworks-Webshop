@@ -30,7 +30,12 @@ class Home extends Component {
       .catch((error) => console.log(`Error: ${error}`));
   };
 
-  render() {
+  saveCart = (product) => {
+    this.setState({ Cart: this.state.Cart.concat(product) });
+    localStorage.setItem("items", JSON.stringify(this.state.Cart));
+  };
+
+  render = () => {
     return (
       <>
         <div>
@@ -56,9 +61,7 @@ class Home extends Component {
                   </div>
                   <div className="card-footer">
                     <button
-                      onClick={() =>
-                        this.setState({ Cart: this.state.Cart.concat(product) })
-                      }
+                      onClick={() => this.saveCart(product)}
                       type="button"
                       className="btn btn-info btn-sm"
                     >
@@ -72,7 +75,7 @@ class Home extends Component {
         </div>
       </>
     );
-  }
+  };
 }
 
 export default Home;

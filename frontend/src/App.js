@@ -13,7 +13,7 @@ class App extends Component {
     super(props);
     this.auth = new Auth(this.props.history);
   }
-  render() {
+  render = () => {
     return (
       <>
         <Navbar auth={this.auth} />
@@ -41,7 +41,7 @@ class App extends Component {
         </div>
       </>
     );
-  }
+  };
 }
 
 export default App;

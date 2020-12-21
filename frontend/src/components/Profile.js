@@ -14,7 +14,7 @@ class Profile extends Component {
     );
   };
 
-  render() {
+  render = () => {
     const { profile } = this.state;
     if (!profile) return null;
     return (
@@ -33,7 +33,7 @@ class Profile extends Component {
         </div>
       </>
     );
-  }
+  };
 }
 
 export default Profile;

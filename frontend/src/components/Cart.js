@@ -2,29 +2,36 @@ import React, { Component } from "react";
 
 class Cart extends Component {
   state = {
-    Cart: [],
+    Cart: JSON.parse(localStorage.getItem("items")),
   };
 
-  handleCart = () => {};
-
-  render() {
+  render = () => {
     return (
       <>
         <h4>Your cart</h4>
-        <ul class="list-unstyled">
-          {this.state.Cart.map((product) => {
+        <ul className="list-unstyled">
+          {this.state.Cart.map((product, index) => {
             return (
-              <li class="media" key={product.id}>
+              <li className="media" key={index}>
                 <img
                   style={{ maxWidth: 150, maxHeight: 150 }}
                   src={product.image}
-                  class="mr-3"
+                  className="mr-3"
                   alt="Product img"
                 />
-                <div class="media-body">
-                  <h5 class="mt-0 mb-1">{product.name}</h5>
+                <div className="media-body">
+                  <h5 className="mt-0 mb-1">{product.name}</h5>
                   <p>{product.description}</p>
-                  <p>{product.price}</p>
+                  <p>€{product.price}</p>
+                </div>
+                <div className="media-footer">
+                  <button
+                    onClick={() =>
+                      this.setState({
+                        Cart: this.state.Cart.splice(index, 1),
+                      })
+                    }
+                  ></button>
                 </div>
               </li>
             );
@@ -32,7 +39,7 @@ class Cart extends Component {
         </ul>
       </>
     );
-  }
+  };
 }
 
 export default Cart;

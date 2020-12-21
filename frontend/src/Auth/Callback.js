@@ -10,13 +10,13 @@ class Callback extends Component {
       throw new Error(`Invalid callback URL!`);
     }
   };
-  render() {
+  render = () => {
     return (
       <div class="spinner-grow" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     );
-  }
+  };
 }
 
 export default Callback;

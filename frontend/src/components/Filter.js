@@ -21,7 +21,7 @@ class Filter extends Component {
     this.props.onSubmit(event.target.value);
   };
 
-  render() {
+  render = () => {
     return (
       <>
         <div className="form-group">
@@ -43,6 +43,6 @@ class Filter extends Component {
         </div>
       </>
     );
-  }
+  };
 }
 export default Filter;
