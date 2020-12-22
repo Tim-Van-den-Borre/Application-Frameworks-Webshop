@@ -4,7 +4,6 @@ import { Route, Redirect } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Navbar from "./components/Navbar";
-import Cart from "./components/Cart";
 import Auth from "./Auth/Auth";
 import Callback from "./Auth/Callback";
 
@@ -12,16 +11,22 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.auth = new Auth(this.props.history);
+    this.state = {
+      Cart: [],
+    };
   }
   render = () => {
+    console.log(this.state.Cart);
     return (
       <>
-        <Navbar auth={this.auth} />
+        <Navbar auth={this.auth} cartdata={this.state.Cart} />
         <div className="body">
           <Route
             path="/"
             exact
-            render={(props) => <Home auth={this.auth} {...props} />}
+            render={(props) => (
+              <Home auth={this.auth} {...props} cartdata={this.state.Cart} />
+            )}
           />
           <Route
             path="/callback"
@@ -37,7 +42,6 @@ class App extends Component {
               )
             }
           />
-          <Route path="/cart" component={Cart} />
         </div>
       </>
     );

@@ -4,7 +4,6 @@ import Filter from "./Filter";
 class Home extends Component {
   state = {
     Products: [],
-    Cart: [],
   };
 
   // Get all the products. Accepts application/json by default.
@@ -31,8 +30,8 @@ class Home extends Component {
   };
 
   saveCart = (product) => {
-    this.setState({ Cart: this.state.Cart.concat(product) });
-    localStorage.setItem("items", JSON.stringify(this.state.Cart));
+    this.props.cartdata.push(product);
+    console.log(this.props.cartdata);
   };
 
   render = () => {

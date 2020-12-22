@@ -19,15 +19,15 @@ class Profile extends Component {
     if (!profile) return null;
     return (
       <>
-        <div class="media">
+        <div className="media">
           <img
             style={{ maxHeight: 60, minHeight: 60 }}
             src={profile.picture}
-            class="mr-3"
+            className="mr-3"
             alt="profile pic"
           />
-          <div class="media-body">
-            <h5 class="mt-0">Welcome {profile.nickname}</h5>
+          <div className="media-body">
+            <h5 className="mt-0">Welcome {profile.nickname}</h5>
             <p>Email address: {profile.email}</p>
           </div>
         </div>
