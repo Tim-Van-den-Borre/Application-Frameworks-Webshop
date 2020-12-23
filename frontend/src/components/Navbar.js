@@ -6,6 +6,7 @@ class Navbar extends Component {
     super(props);
     this.state = {
       Cart: [],
+      Count: 0,
     };
   }
 
@@ -13,8 +14,13 @@ class Navbar extends Component {
     this.setState({ Cart: this.props.cartdata });
   };
 
+  saveOrder = () => {
+    console.log(this.props.cartdata);
+  };
+
   render = () => {
     const { isAuthenticated, login, logout } = this.props.auth;
+    this.count = 0;
     return (
       <>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -81,7 +87,7 @@ class Navbar extends Component {
                           return (
                             <li className="list-group-item" key={index}>
                               {product.name} - {product.description} - €
-                              {product.price}
+                              {product.price} <br />
                               <button
                                 onClick={() =>
                                   this.setState({
@@ -93,10 +99,17 @@ class Navbar extends Component {
                               >
                                 Remove
                               </button>
+                              <p>
+                                Subtotal:
+                                {(this.count =
+                                  this.count + product.price).toFixed(2)}
+                              </p>
                             </li>
                           );
                         })}
                       </ul>
+                      <hr />
+                      <p>Total: {this.count.toFixed(2)}</p>
                     </div>
                     <div className="modal-footer">
                       <button
@@ -106,9 +119,19 @@ class Navbar extends Component {
                       >
                         Close
                       </button>
-                      <button type="button" className="btn btn-primary btn-sm">
-                        Submit order
-                      </button>
+                      {isAuthenticated() ? (
+                        <button
+                          onClick={this.saveOrder}
+                          type="button"
+                          className="btn btn-primary btn-sm"
+                        >
+                          Submit order
+                        </button>
+                      ) : (
+                        <Link to="" onClick={login}>
+                          Log in / Sign up
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>

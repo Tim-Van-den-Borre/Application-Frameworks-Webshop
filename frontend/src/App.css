@@ -42,8 +42,7 @@ nav li a:hover {
   height: 15px;
 }
 
-#price,
-#amount {
+#price {
   text-align: right;
   height: 5px;
 }

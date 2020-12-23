@@ -29,7 +29,7 @@ class Home extends Component {
       .catch((error) => console.log(`Error: ${error}`));
   };
 
-  saveCart = (product) => {
+  saveToCart = (product) => {
     this.props.cartdata.push(product);
     console.log(this.props.cartdata);
   };
@@ -54,13 +54,10 @@ class Home extends Component {
                     <p className="card-text" id="price">
                       €{product.price}
                     </p>
-                    <p className="card-text" id="amount">
-                      Available: {product.amount}
-                    </p>
                   </div>
                   <div className="card-footer">
                     <button
-                      onClick={() => this.saveCart(product)}
+                      onClick={() => this.saveToCart(product)}
                       type="button"
                       className="btn btn-info btn-sm"
                     >
