@@ -7,15 +7,52 @@ class Navbar extends Component {
     this.state = {
       Cart: [],
       Count: 0,
+      profile: null,
+      error: "",
     };
+    if (this.props.auth.isAuthenticated()) {
+      // Get the username.
+      this.props.auth.getProfile((profile, error) =>
+        this.setState({ profile, error })
+      );
+    }
   }
 
   handleCart = () => {
     this.setState({ Cart: this.props.cartdata });
+    localStorage.setItem("CartItems", JSON.stringify(this.props.cartdata));
+  };
+
+  removeItemFromCart = (index) => {
+    this.setState({
+      Cart: this.props.cartdata.splice(index, 1),
+    });
+    localStorage.setItem("CartItems", JSON.stringify(this.props.cartdata));
   };
 
   saveOrder = () => {
+    let products = "Products: ";
+
+    for (let product of this.props.cartdata) {
+      products +=
+        product.name + " " + product.description + " €" + product.price + ". ";
+    }
+    console.log(products);
+    fetch(
+      `http://localhost:8080/api/orders?username=${this.state.profile.nickname}&products=${products}`,
+      {
+        method: "POST",
+        accept: "application/json",
+      }
+    )
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw new Error(`Could not post order.`);
+      })
+      .catch((error) => console.log(`Error: ${error}`));
     console.log(this.props.cartdata);
+    localStorage.removeItem("CartItems");
+    window.location.reload();
   };
 
   render = () => {
@@ -85,26 +122,26 @@ class Navbar extends Component {
                       <ul className="list-group">
                         {this.props.cartdata.map((product, index) => {
                           return (
-                            <li className="list-group-item" key={index}>
-                              {product.name} - {product.description} - €
-                              {product.price} <br />
-                              <button
-                                onClick={() =>
-                                  this.setState({
-                                    Cart: this.props.cartdata.splice(index, 1),
-                                  })
-                                }
-                                type="button"
-                                className="btn btn-danger btn-sm"
-                              >
-                                Remove
-                              </button>
-                              <p>
-                                Subtotal:
-                                {(this.count =
-                                  this.count + product.price).toFixed(2)}
-                              </p>
-                            </li>
+                            <div key={index}>
+                              <li className="list-group-item">
+                                <p>
+                                  {product.name} - {product.description} - €
+                                  {product.price}
+                                </p>
+
+                                <button
+                                  onClick={() => this.removeItemFromCart(index)}
+                                  type="button"
+                                  className="btn btn-danger btn-sm"
+                                >
+                                  Remove
+                                </button>
+                                <p className="hidden">
+                                  Subtotal:
+                                  {(this.count += product.price).toFixed(2)}
+                                </p>
+                              </li>
+                            </div>
                           );
                         })}
                       </ul>

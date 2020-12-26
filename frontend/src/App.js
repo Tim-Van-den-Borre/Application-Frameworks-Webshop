@@ -11,10 +11,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.auth = new Auth(this.props.history);
-    this.state = {
-      Cart: [],
-    };
+    if (JSON.parse(localStorage.getItem("CartItems"))) {
+      this.state = {
+        Cart: JSON.parse(localStorage.getItem("CartItems")),
+      };
+    } else {
+      this.state = {
+        Cart: [],
+      };
+      localStorage.setItem("CartItems", "[]");
+    }
   }
+
   render = () => {
     console.log(this.state.Cart);
     return (

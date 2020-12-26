@@ -5,6 +5,7 @@ class Profile extends Component {
   state = {
     profile: null,
     error: "",
+    orders: [],
   };
 
   // Load user profile data.
@@ -12,6 +13,15 @@ class Profile extends Component {
     this.props.auth.getProfile((profile, error) =>
       this.setState({ profile, error })
     );
+    fetch(
+      `http://localhost:8080/api/productorders?username=${this.state.profile.nickname}`
+    )
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw new Error(`Could not fetch orders.`);
+      })
+      .then((response) => this.setState({ orders: response }))
+      .catch((error) => console.log(`Error: ${error}`));
   };
 
   render = () => {
@@ -31,6 +41,17 @@ class Profile extends Component {
             <p>Email address: {profile.email}</p>
           </div>
         </div>
+        <hr />
+        <p>Order history:</p>
+        {this.state.orders.map((order, index) => {
+          return (
+            <div key={index}>
+              <li className="list-group-item">
+                <p>Order placed on: {order.date}</p>
+              </li>
+            </div>
+          );
+        })}
       </>
     );
   };
