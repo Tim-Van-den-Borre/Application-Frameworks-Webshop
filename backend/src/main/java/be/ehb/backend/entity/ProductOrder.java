@@ -16,6 +16,8 @@ public class ProductOrder {
 
     private Timestamp date;
 
+    private double total;
+
     public ProductOrder() {
         this.date = new Timestamp(System.currentTimeMillis());
     }
@@ -50,5 +52,13 @@ public class ProductOrder {
 
     public void setDate(Timestamp date) {
         this.date = date;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 }

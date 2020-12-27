@@ -9,6 +9,8 @@ class Navbar extends Component {
       Count: 0,
       profile: null,
       error: "",
+      username: "",
+      total: 0,
     };
     if (this.props.auth.isAuthenticated()) {
       // Get the username.
@@ -31,15 +33,14 @@ class Navbar extends Component {
   };
 
   saveOrder = () => {
-    let products = "Products: ";
+    let products = "";
 
     for (let product of this.props.cartdata) {
-      products +=
-        product.name + " " + product.description + " €" + product.price + ". ";
+      products += product.description + " €" + product.price + ". ";
     }
     console.log(products);
     fetch(
-      `http://localhost:8080/api/orders?username=${this.state.profile.nickname}&products=${products}`,
+      `http://localhost:8080/api/orders?username=${this.state.username}&products=${products}&total=${this.state.total}`,
       {
         method: "POST",
         accept: "application/json",
@@ -57,6 +58,9 @@ class Navbar extends Component {
 
   render = () => {
     const { isAuthenticated, login, logout } = this.props.auth;
+    const { profile } = this.state;
+    if (!profile) return null;
+    this.state.username = profile.nickname;
     this.count = 0;
     return (
       <>
@@ -139,6 +143,7 @@ class Navbar extends Component {
                                 <p className="hidden">
                                   Subtotal:
                                   {(this.count += product.price).toFixed(2)}
+                                  {(this.state.total = this.count)}
                                 </p>
                               </li>
                             </div>

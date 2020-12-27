@@ -26,7 +26,7 @@ nav li a:hover {
 }
 
 #filter {
-  width: 30rem;
+  width: 22rem;
   margin: auto;
   margin-top: 15px;
 }
@@ -38,13 +38,8 @@ nav li a:hover {
   margin-top: 5px;
 }
 
-#description {
-  height: 15px;
-}
-
 #price {
   text-align: right;
-  height: 5px;
 }
 
 .row {
@@ -54,9 +49,16 @@ nav li a:hover {
 }
 
 .card {
-  width: 30rem;
-  border-radius: 10px;
-  margin: 0.5rem;
+  width: 22rem;
+  height: 27rem;
+  border-radius: 15px;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  margin-bottom: 2rem;
+}
+
+.cart-footer {
+  color: white;
 }
 
 .card:hover {
@@ -65,4 +67,9 @@ nav li a:hover {
 
 .hidden {
   display: none;
+}
+
+.Orders {
+  width: 50%;
+  margin: auto;
 }

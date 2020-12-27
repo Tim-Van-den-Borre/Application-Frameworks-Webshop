@@ -13,9 +13,11 @@ class Profile extends Component {
     this.props.auth.getProfile((profile, error) =>
       this.setState({ profile, error })
     );
-    fetch(
-      `http://localhost:8080/api/productorders?username=${this.state.profile.nickname}`
-    )
+  };
+
+  // Show the orders from the user.
+  showOrdersByUsername = (username) => {
+    fetch(`http://localhost:8080/api/productorders?username=${username}`)
       .then((response) => {
         if (response.ok) return response.json();
         throw new Error(`Could not fetch orders.`);
@@ -42,16 +44,24 @@ class Profile extends Component {
           </div>
         </div>
         <hr />
-        <p>Order history:</p>
-        {this.state.orders.map((order, index) => {
-          return (
-            <div key={index}>
-              <li className="list-group-item">
-                <p>Order placed on: {order.date}</p>
-              </li>
-            </div>
-          );
-        })}
+        <div className="Orders">
+          <p>Your order history:</p>
+          {this.showOrdersByUsername(profile.nickname)}
+          {this.state.orders.map((order, index) => {
+            return (
+              <div key={index}>
+                <li className="list-group-item">
+                  <p>
+                    Product(s): <br />
+                    {order.products}
+                  </p>
+                  <p>Amount: {order.total}</p>
+                  <p>Order date: {order.date}</p>
+                </li>
+              </div>
+            );
+          })}
+        </div>
       </>
     );
   };

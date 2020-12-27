@@ -18,7 +18,7 @@ class Home extends Component {
   };
 
   // Get all the products filtered by category. Accepts application/json by default.
-  filteredProducts = (category) => {
+  showFilteredProducts = (category) => {
     if (category === "None") this.componentDidMount();
     fetch(`http://localhost:8080/api/products?category=${category}`)
       .then((response) => {
@@ -29,9 +29,9 @@ class Home extends Component {
       .catch((error) => console.log(`Error: ${error}`));
   };
 
-  saveToCart = (product) => {
+  // Add a product to the cart.
+  saveProductToCart = (product) => {
     this.props.cartdata.push(product);
-    console.log(this.props.cartdata);
   };
 
   render = () => {
@@ -39,7 +39,7 @@ class Home extends Component {
       <>
         <div>
           <div className="row" id="filter">
-            <Filter onSubmit={this.filteredProducts} />
+            <Filter onSubmit={this.showFilteredProducts} />
           </div>
           <div className="row" id="products">
             {this.state.Products.map((product) => {
@@ -57,7 +57,7 @@ class Home extends Component {
                   </div>
                   <div className="card-footer">
                     <button
-                      onClick={() => this.saveToCart(product)}
+                      onClick={() => this.saveProductToCart(product)}
                       type="button"
                       className="btn btn-info btn-sm"
                     >
