@@ -13,6 +13,10 @@ class Navbar extends Component {
 
   // Get the user profile if the user is authenticated (unique username needed for submitting order).
   componentDidMount = () => {
+    this.getProfileInfo();
+  };
+
+  getProfileInfo = () => {
     if (this.props.auth.isAuthenticated()) {
       this.props.auth.getProfile((profile, error) =>
         this.setState({ profile, error })
@@ -64,7 +68,7 @@ class Navbar extends Component {
     const { isAuthenticated, login, logout } = this.props.auth;
     const { profile } = this.state;
     if (!profile) {
-      this.componentDidMount();
+      this.getProfileInfo();
     }
     this.count = 0;
     return (

@@ -1,8 +1,7 @@
 package be.ehb.backend.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class ProductOrder {
@@ -14,12 +13,12 @@ public class ProductOrder {
 
     private String products;
 
-    private Timestamp date;
+    private LocalDate date;
 
     private double total;
 
     public ProductOrder() {
-        this.date = new Timestamp(System.currentTimeMillis());
+        this.date = LocalDate.now();
     }
 
     public int getId() {
@@ -46,19 +45,19 @@ public class ProductOrder {
         this.products = products;
     }
 
-    public Timestamp getDate() {
-        return date;
-    }
-
-    public void setDate(Timestamp date) {
-        this.date = date;
-    }
-
     public double getTotal() {
         return total;
     }
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }
