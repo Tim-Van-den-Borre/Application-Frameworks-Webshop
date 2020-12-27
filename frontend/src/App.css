@@ -11,12 +11,11 @@ nav li {
   border-radius: 10px;
 }
 
-nav li a {
-  color: white;
+.nav-item {
+  cursor: pointer;
 }
 
-nav li a:hover {
-  color: white;
+.nav-item:hover {
   text-decoration: underline;
 }
 

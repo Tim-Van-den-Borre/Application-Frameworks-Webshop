@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 
 class Profile extends Component {
-  // Save profile data to the state.
   state = {
     profile: null,
     error: "",
     orders: [],
   };
 
-  // Load user profile data.
+  // Load user profile data and add the profile to the state.
   componentDidMount = () => {
     this.props.auth.getProfile((profile, error) =>
       this.setState({ profile, error })
@@ -27,6 +26,7 @@ class Profile extends Component {
   };
 
   render = () => {
+    // Variable for profile (easy access in the render)
     const { profile } = this.state;
     if (!profile) return null;
     return (
@@ -55,9 +55,10 @@ class Profile extends Component {
                     Product(s): <br />
                     {order.products}
                   </p>
-                  <p>Amount: {order.total}</p>
+                  <p>Total Amount: {order.total}</p>
                   <p>Order date: {order.date}</p>
                 </li>
+                <br />
               </div>
             );
           })}

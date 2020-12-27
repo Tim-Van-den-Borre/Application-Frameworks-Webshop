@@ -2,7 +2,7 @@ import auth0 from "auth0-js";
 
 export default class Auth {
   constructor(history) {
-    // Is the user still logged in? When did he/she log in.
+    // Is the user still logged in? When did the user log in.
     this.history = history;
     // Profile data.
     this.userProfile = null;

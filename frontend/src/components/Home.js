@@ -6,7 +6,7 @@ class Home extends Component {
     Products: [],
   };
 
-  // Get all the products. Accepts application/json by default.
+  // Get all the products and add them to the state. Accepts application/json by default.
   componentDidMount = () => {
     fetch(`http://localhost:8080/api/products`)
       .then((response) => {
@@ -29,9 +29,10 @@ class Home extends Component {
       .catch((error) => console.log(`Error: ${error}`));
   };
 
-  // Add a product to the cart.
+  // Add a product to the cart and save the props in localStorage.
   saveProductToCart = (product) => {
     this.props.cartdata.push(product);
+    localStorage.setItem("CartItems", JSON.stringify(this.props.cartdata));
   };
 
   render = () => {
@@ -59,7 +60,7 @@ class Home extends Component {
                     <button
                       onClick={() => this.saveProductToCart(product)}
                       type="button"
-                      className="btn btn-info btn-sm"
+                      className="btn btn-outline-primary btn-sm"
                     >
                       Add to cart
                     </button>

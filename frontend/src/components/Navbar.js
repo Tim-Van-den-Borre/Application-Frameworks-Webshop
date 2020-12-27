@@ -5,26 +5,27 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Cart: [],
-      Count: 0,
       profile: null,
       error: "",
-      username: "",
-      total: 0,
+      Cart: [],
     };
+  }
+
+  // Get the user profile if the user is authenticated (unique username needed for submitting order).
+  componentDidMount = () => {
     if (this.props.auth.isAuthenticated()) {
-      // Get the username.
       this.props.auth.getProfile((profile, error) =>
         this.setState({ profile, error })
       );
     }
-  }
-
-  handleCart = () => {
-    this.setState({ Cart: this.props.cartdata });
-    localStorage.setItem("CartItems", JSON.stringify(this.props.cartdata));
   };
 
+  // Get all the cart items.
+  getCartItems = () => {
+    this.setState({ Cart: this.props.cartdata });
+  };
+
+  // Remove an item from the cart.
   removeItemFromCart = (index) => {
     this.setState({
       Cart: this.props.cartdata.splice(index, 1),
@@ -32,15 +33,18 @@ class Navbar extends Component {
     localStorage.setItem("CartItems", JSON.stringify(this.props.cartdata));
   };
 
-  saveOrder = () => {
+  // Save the order.
+  submitOrder = (count, username) => {
     let products = "";
 
     for (let product of this.props.cartdata) {
       products += product.description + " €" + product.price + ". ";
     }
-    console.log(products);
+
     fetch(
-      `http://localhost:8080/api/orders?username=${this.state.username}&products=${products}&total=${this.state.total}`,
+      `http://localhost:8080/api/orders?username=${username}&products=${products}&total=${count.toFixed(
+        2
+      )}`,
       {
         method: "POST",
         accept: "application/json",
@@ -51,53 +55,56 @@ class Navbar extends Component {
         throw new Error(`Could not post order.`);
       })
       .catch((error) => console.log(`Error: ${error}`));
-    console.log(this.props.cartdata);
-    localStorage.removeItem("CartItems");
+
+    localStorage.setItem("CartItems", "[]");
     window.location.reload();
   };
 
-  render = () => {
+  render() {
     const { isAuthenticated, login, logout } = this.props.auth;
     const { profile } = this.state;
-    if (!profile) return null;
-    this.state.username = profile.nickname;
+    if (!profile) {
+      this.componentDidMount();
+    }
     this.count = 0;
     return (
       <>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a className="navbar-brand" href="./">
-            Webshop
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <a className="navbar-brand" href="/">
+            Tim's Webshop
           </a>
           <button
             className="navbar-toggler"
             type="button"
             data-toggle="collapse"
-            data-target="#navbarText"
-            aria-controls="navbarText"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon" />
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarText">
-            <ul className="navbar-nav mr-auto">
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
               <li className="nav-item">
-                <Link to="/">Home</Link>
+                <a className="nav-link" style={{ color: "white" }} href="/">
+                  Product catalogue
+                </a>
               </li>
             </ul>
-
             <ul className="navbar-nav ml-auto">
-              <li>
+              <li className="nav-item">
                 <a
+                  className="nav-link"
                   href="/"
-                  onClick={this.handleCart}
                   data-toggle="modal"
                   data-target="#staticBackdrop"
+                  onClick={() => this.getCartItems()}
+                  style={{ color: "white" }}
                 >
                   Cart
                 </a>
               </li>
-
               <div
                 className="modal fade"
                 id="staticBackdrop"
@@ -110,9 +117,9 @@ class Navbar extends Component {
                 <div className="modal-dialog modal-lg">
                   <div className="modal-content">
                     <div className="modal-header">
-                      <h5 className="modal-title" id="staticBackdropLabel">
+                      <h4 className="modal-title" id="staticBackdropLabel">
                         Cart
-                      </h5>
+                      </h4>
                       <button
                         type="button"
                         className="close"
@@ -129,8 +136,7 @@ class Navbar extends Component {
                             <div key={index}>
                               <li className="list-group-item">
                                 <p>
-                                  {product.name} - {product.description} - €
-                                  {product.price}
+                                  {product.description} - €{product.price}
                                 </p>
 
                                 <button
@@ -143,15 +149,23 @@ class Navbar extends Component {
                                 <p className="hidden">
                                   Subtotal:
                                   {(this.count += product.price).toFixed(2)}
-                                  {(this.state.total = this.count)}
                                 </p>
                               </li>
                             </div>
                           );
                         })}
                       </ul>
-                      <hr />
-                      <p>Total: {this.count.toFixed(2)}</p>
+
+                      {this.count !== 0 ? (
+                        <>
+                          <hr />
+                          <p>Total: {this.count.toFixed(2)}</p>
+                        </>
+                      ) : (
+                        <>
+                          <p>Your cart is empty!</p>
+                        </>
+                      )}
                     </div>
                     <div className="modal-footer">
                       <button
@@ -163,16 +177,25 @@ class Navbar extends Component {
                       </button>
                       {isAuthenticated() ? (
                         <button
-                          onClick={this.saveOrder}
+                          onClick={() =>
+                            this.submitOrder(this.count, profile.nickname)
+                          }
                           type="button"
                           className="btn btn-primary btn-sm"
                         >
-                          Submit order
+                          Submit my order
                         </button>
                       ) : (
-                        <Link to="" onClick={login}>
-                          Log in / Sign up
-                        </Link>
+                        <button className="btn btn-primary btn-sm">
+                          <Link
+                            style={{ color: "white" }}
+                            to=""
+                            onClick={login}
+                            auth={this.props.auth}
+                          >
+                            Please Log in / Sign up
+                          </Link>
+                        </button>
                       )}
                     </div>
                   </div>
@@ -180,20 +203,38 @@ class Navbar extends Component {
               </div>
               {isAuthenticated() ? (
                 <li className="nav-item">
-                  <Link to="/profile">Profile</Link>
+                  <a
+                    className="nav-link"
+                    style={{ color: "white" }}
+                    href="/profile"
+                  >
+                    Profile
+                  </a>
                 </li>
               ) : (
                 <></>
               )}
               {isAuthenticated() ? (
                 <li className="nav-item">
-                  <Link to="" onClick={logout}>
+                  <Link
+                    className="nav-link"
+                    style={{ color: "white" }}
+                    to=""
+                    onClick={logout}
+                    auth={this.props.auth}
+                  >
                     Log out
                   </Link>
                 </li>
               ) : (
                 <li className="nav-item">
-                  <Link to="" onClick={login}>
+                  <Link
+                    className="nav-link"
+                    style={{ color: "white" }}
+                    to=""
+                    onClick={login}
+                    auth={this.props.auth}
+                  >
                     Log in / Sign up
                   </Link>
                 </li>
@@ -203,7 +244,7 @@ class Navbar extends Component {
         </nav>
       </>
     );
-  };
+  }
 }
 
 export default Navbar;

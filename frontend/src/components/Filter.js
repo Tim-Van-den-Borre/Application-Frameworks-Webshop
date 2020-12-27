@@ -5,7 +5,7 @@ class Filter extends Component {
     Categories: [],
   };
 
-  // Get all the categories. Accepts application/json by default.
+  // Get all the categories and add them to the state. Accepts application/json by default.
   componentDidMount = () => {
     fetch(`http://localhost:8080/api/categories`)
       .then((response) => {
