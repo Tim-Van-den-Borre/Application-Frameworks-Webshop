@@ -22,6 +22,10 @@ class Navbar extends Component {
     localStorage.setItem("CartItems", JSON.stringify(this.props.cartdata));
   };
 
+  closeCart = () => {
+    window.location.reload();
+  };
+
   render() {
     const { isAuthenticated, login, logout } = this.props.auth;
     this.count = 0;
@@ -78,14 +82,6 @@ class Navbar extends Component {
                       <h4 className="modal-title" id="staticBackdropLabel">
                         Cart
                       </h4>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
                     </div>
                     <div className="modal-body">
                       {this.props.cartdata.map((product, index) => {
@@ -130,7 +126,7 @@ class Navbar extends Component {
                         type="button"
                         className="btn btn-secondary btn-sm"
                         data-dismiss="modal"
-                        href="/"
+                        onClick={this.closeCart}
                       >
                         Close
                       </button>
