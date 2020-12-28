@@ -69,3 +69,8 @@ class Profile extends Component {
 }
 
 export default Profile;
+
+/*
+  Implement auth0. Login. Sign up. Consulted 16/12/2020.
+  https://app.pluralsight.com/library/courses/react-auth0-authentication-security/table-of-contents
+*/
