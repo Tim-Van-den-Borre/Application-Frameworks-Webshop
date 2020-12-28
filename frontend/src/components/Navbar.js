@@ -162,7 +162,7 @@ class Navbar extends Component {
                       {this.count !== 0 ? (
                         <div className="row">
                           <div className="col-12">
-                            <p>Total: €{this.count.toFixed(2)}</p>
+                            <p>Total: {this.count.toFixed(2)}</p>
                           </div>
                         </div>
                       ) : (
@@ -180,15 +180,26 @@ class Navbar extends Component {
                         Close
                       </button>
                       {isAuthenticated() ? (
-                        <button
-                          onClick={() =>
-                            this.submitOrder(this.count, profile.nickname)
-                          }
-                          type="button"
-                          className="btn btn-primary btn-sm"
-                        >
-                          Submit my order
-                        </button>
+                        <div>
+                          {this.count !== 0 ? (
+                            <a
+                              className="btn btn-primary btn-sm"
+                              style={{ color: "white" }}
+                              href="/checkout"
+                            >
+                              Proceed to checkout
+                            </a>
+                          ) : (
+                            <button
+                              type="button"
+                              className="btn btn-primary btn-sm"
+                              href="/checkout"
+                              disabled
+                            >
+                              Proceed to checkout
+                            </button>
+                          )}
+                        </div>
                       ) : (
                         <button className="btn btn-primary btn-sm">
                           <Link

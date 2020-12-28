@@ -6,6 +6,7 @@ import Profile from "./components/Profile";
 import Navbar from "./components/Navbar";
 import Auth from "./Auth/Auth";
 import Callback from "./Auth/Callback";
+import Checkout from "./components/Checkout";
 
 class App extends Component {
   constructor(props) {
@@ -54,6 +55,22 @@ class App extends Component {
             render={(props) =>
               this.auth.isAuthenticated() ? (
                 <Profile auth={this.auth} {...props} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
+
+          {/* Route to the profile component. If the user is authenticated we pass the auth values and props to the Profile component. */}
+          <Route
+            path="/checkout"
+            render={(props) =>
+              this.auth.isAuthenticated() ? (
+                <Checkout
+                  auth={this.auth}
+                  {...props}
+                  cartdata={this.state.Cart}
+                />
               ) : (
                 <Redirect to="/" />
               )

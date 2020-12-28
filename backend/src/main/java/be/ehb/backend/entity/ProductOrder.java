@@ -17,6 +17,8 @@ public class ProductOrder {
 
     private double total;
 
+    private String paymentmethod;
+
     public ProductOrder() {
         this.date = LocalDate.now();
     }
@@ -59,5 +61,13 @@ public class ProductOrder {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getPaymentmethod() {
+        return paymentmethod;
+    }
+
+    public void setPaymentmethod(String paymentmethod) {
+        this.paymentmethod = paymentmethod;
     }
 }

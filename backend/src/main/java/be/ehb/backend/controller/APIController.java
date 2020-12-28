@@ -72,12 +72,13 @@ public class APIController {
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
     @ResponseBody
-    public HttpStatus addOrder(@RequestParam("username") String username, @RequestParam("products") String products, @RequestParam("total") double total){
+    public HttpStatus addOrder(@RequestParam("username") String username, @RequestParam("products") String products, @RequestParam("total") double total, @RequestParam("payment") String payment){
         try{
             ProductOrder order = new ProductOrder();
             order.setUsername(username);
             order.setProducts(products);
             order.setTotal(total);
+            order.setPaymentmethod(payment);
             productOrderDAO.save(order);
             return HttpStatus.OK;
         }catch (Exception e){
