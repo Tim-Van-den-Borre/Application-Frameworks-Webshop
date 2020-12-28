@@ -50,7 +50,6 @@ nav li {
 .card {
   width: 22rem;
   height: 27rem;
-  border-radius: 15px;
   margin-left: 3rem;
   margin-right: 3rem;
   margin-bottom: 2rem;
@@ -61,7 +60,7 @@ nav li {
 }
 
 .card:hover {
-  border: 1px solid deepskyblue;
+  border: 1px solid rgb(0, 153, 255);
 }
 
 .hidden {
@@ -71,4 +70,8 @@ nav li {
 .Orders {
   width: 50%;
   margin: auto;
+}
+
+.col-12 {
+  text-align: right;
 }

@@ -134,37 +134,37 @@ class Navbar extends Component {
                       </button>
                     </div>
                     <div className="modal-body">
-                      <ul className="list-group">
-                        {this.props.cartdata.map((product, index) => {
-                          return (
-                            <div key={index}>
-                              <li className="list-group-item">
-                                <p>
-                                  {product.description} - €{product.price}
-                                </p>
-
-                                <button
-                                  onClick={() => this.removeItemFromCart(index)}
-                                  type="button"
-                                  className="btn btn-danger btn-sm"
-                                >
-                                  Remove
-                                </button>
-                                <p className="hidden">
-                                  Subtotal:
-                                  {(this.count += product.price).toFixed(2)}
-                                </p>
-                              </li>
+                      {this.props.cartdata.map((product, index) => {
+                        return (
+                          <div className="row" key={index}>
+                            <div className="col-10">
+                              <p>
+                                {product.description} - €{product.price}
+                              </p>
                             </div>
-                          );
-                        })}
-                      </ul>
-
+                            <div className="col-2">
+                              <button
+                                onClick={() => this.removeItemFromCart(index)}
+                                type="button"
+                                className="btn btn-danger btn-sm"
+                              >
+                                Remove
+                              </button>
+                              <p className="hidden">
+                                Subtotal:
+                                {(this.count += product.price).toFixed(2)}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                      <br />
                       {this.count !== 0 ? (
-                        <>
-                          <hr />
-                          <p>Total: {this.count.toFixed(2)}</p>
-                        </>
+                        <div className="row">
+                          <div className="col-12">
+                            <p>Total: €{this.count.toFixed(2)}</p>
+                          </div>
+                        </div>
                       ) : (
                         <>
                           <p>Your cart is empty!</p>
