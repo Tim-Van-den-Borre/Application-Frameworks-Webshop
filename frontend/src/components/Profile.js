@@ -56,6 +56,7 @@ class Profile extends Component {
                     {order.products}
                   </p>
                   <p>Total Amount: {order.total}</p>
+                  <p>Payment method: {order.paymentmethod}</p>
                   <p>Order date: {order.date}</p>
                 </li>
                 <br />

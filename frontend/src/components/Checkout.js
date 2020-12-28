@@ -2,18 +2,21 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
 class checkout extends Component {
-  state = {
-    profile: null,
-    error: "",
-    Orders: [],
-    Payment: "Mastercard",
-  };
-
-  // Load user profile data and add the profile to the state.
-  componentDidMount = () => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      profile: null,
+      error: "",
+      Orders: [],
+      Payment: "Mastercard", //Default payment
+    };
     this.props.auth.getProfile((profile, error) =>
       this.setState({ profile, error })
     );
+  }
+
+  // Load user profile data and add the profile to the state.
+  componentDidMount = () => {
     this.getCartItems();
   };
 
@@ -66,12 +69,12 @@ class checkout extends Component {
       <div id="checkout">
         <div>
           <div className="form-group">
-            <label for="username">User: {profile.nickname}</label>
+            <label htmlFor="username">User: {profile.nickname}</label>
             <br />
-            <label for="emailaddress">Email address: {profile.email}</label>
+            <label htmlFor="emailaddress">Email address: {profile.email}</label>
           </div>
           <div className="form-group" onChange={this.changePayment}>
-            <label for="selectpayment">Payment Method:</label>
+            <label htmlFor="selectpayment">Payment Method:</label>
             <select className="form-control" id="selectpayment">
               <option value="Mastercard">Mastercard</option>
               <option value="American Express">American Express</option>
@@ -79,7 +82,7 @@ class checkout extends Component {
             </select>
           </div>
           <div className="form-group">
-            <label for="exampleFormControlSelect2">Products:</label>
+            <label htmlFor="exampleFormControlSelect2">Products:</label>
             <br />
             {this.props.cartdata.map((product, index) => {
               return (

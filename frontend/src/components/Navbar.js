@@ -5,26 +5,11 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: null,
-      error: "",
       Cart: [],
     };
   }
 
-  // Get the user profile if the user is authenticated (unique username needed for submitting order).
-  componentDidMount = () => {
-    this.getProfileInfo();
-  };
-
-  getProfileInfo = () => {
-    if (this.props.auth.isAuthenticated()) {
-      this.props.auth.getProfile((profile, error) =>
-        this.setState({ profile, error })
-      );
-    }
-  };
-
-  // Get all the cart items.
+  // Get all the cart items from the props.
   getCartItems = () => {
     this.setState({ Cart: this.props.cartdata });
   };
@@ -37,39 +22,8 @@ class Navbar extends Component {
     localStorage.setItem("CartItems", JSON.stringify(this.props.cartdata));
   };
 
-  // Save the order.
-  submitOrder = (count, username) => {
-    let products = "";
-
-    for (let product of this.props.cartdata) {
-      products += product.description + " €" + product.price + ". ";
-    }
-
-    fetch(
-      `http://localhost:8080/api/orders?username=${username}&products=${products}&total=${count.toFixed(
-        2
-      )}`,
-      {
-        method: "POST",
-        accept: "application/json",
-      }
-    )
-      .then((response) => {
-        if (response.ok) return response.json();
-        throw new Error(`Could not post order.`);
-      })
-      .catch((error) => console.log(`Error: ${error}`));
-
-    localStorage.setItem("CartItems", "[]");
-    window.location.reload();
-  };
-
   render() {
     const { isAuthenticated, login, logout } = this.props.auth;
-    const { profile } = this.state;
-    if (!profile) {
-      this.getProfileInfo();
-    }
     this.count = 0;
     return (
       <>
@@ -161,7 +115,7 @@ class Navbar extends Component {
                       <br />
                       {this.count !== 0 ? (
                         <div className="row">
-                          <div className="col-12">
+                          <div className="right col-12">
                             <p>Total: {this.count.toFixed(2)}</p>
                           </div>
                         </div>
@@ -176,6 +130,7 @@ class Navbar extends Component {
                         type="button"
                         className="btn btn-secondary btn-sm"
                         data-dismiss="modal"
+                        href="/"
                       >
                         Close
                       </button>
@@ -206,7 +161,6 @@ class Navbar extends Component {
                             style={{ color: "white" }}
                             to=""
                             onClick={login}
-                            auth={this.props.auth}
                           >
                             Please Log in / Sign up
                           </Link>
@@ -236,7 +190,6 @@ class Navbar extends Component {
                     style={{ color: "white" }}
                     to=""
                     onClick={logout}
-                    auth={this.props.auth}
                   >
                     Log out
                   </Link>
@@ -248,7 +201,6 @@ class Navbar extends Component {
                     style={{ color: "white" }}
                     to=""
                     onClick={login}
-                    auth={this.props.auth}
                   >
                     Log in / Sign up
                   </Link>
