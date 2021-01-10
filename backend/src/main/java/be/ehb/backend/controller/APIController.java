@@ -27,6 +27,7 @@ public class APIController {
         this.productOrderDAO = productOrderDAO;
     }
 
+    // Get a product by ID
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -34,6 +35,7 @@ public class APIController {
         return productDAO.findById(id);
     }
 
+    // Get all the products
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     @ResponseBody
@@ -44,6 +46,7 @@ public class APIController {
         return productDAO.findAllByCategory_Name(category);
     }
 
+    // Get all order by a username
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/productorders", method = RequestMethod.GET)
     @ResponseBody
@@ -51,6 +54,7 @@ public class APIController {
         return productOrderDAO.findAllByUsername(username);
     }
 
+    // Show the categories
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     @ResponseBody
@@ -58,6 +62,7 @@ public class APIController {
         return categoryDAO.findAll();
     }
 
+    // Delete a product by ID
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/products/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
@@ -69,6 +74,7 @@ public class APIController {
         return HttpStatus.NOT_FOUND;
     }
 
+    // Add an order
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
     @ResponseBody
